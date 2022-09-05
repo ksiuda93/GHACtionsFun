@@ -1,0 +1,29 @@
+name: Merge develop to release/vX.X
+on:
+  workflow_dispatch:
+    inputs:
+      releaseBranch:
+        description: 'Release branch to merge develop'     
+        required: true
+        default: 'release/v1.0'
+  # schedule:
+  # - cron: '*/5 * * * *'
+jobs:
+  merge-develop-to-release:
+    runs-on: [ self-hosted ] 
+    steps:
+    - uses: actions/checkout@v3
+      # with:
+      #   ref: develop
+    - name: Set Git config
+      run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Github Actions"
+    - name: Merge develop to release branch
+      run: |
+          git fetch --unshallow
+          git checkout develop
+          git pull
+          git checkout ${{ github.event.inputs.releaseBranch }}
+          git merge --no-ff develop
+          git push
