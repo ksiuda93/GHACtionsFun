@@ -6,15 +6,15 @@ on:
         description: 'Release branch to merge develop'     
         required: true
         default: 'release/v1.0'
-  # schedule:
-  # - cron: '*/5 * * * *'
+  schedule:
+  - cron: '*/5 * * * *'
 jobs:
   merge-develop-to-release:
     runs-on: [ ubuntu-latest ] 
     steps:
     - uses: actions/checkout@v3
-      # with:
-      #   ref: develop
+      with:
+        ref: main
     - name: Set Git config
       run: |
           git config --local user.email "actions@github.com"
