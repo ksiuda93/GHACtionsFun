@@ -24,6 +24,6 @@ jobs:
           git fetch --unshallow
           git checkout develop
           git pull
-          git checkout ${{ github.event.inputs.releaseBranch }}
+          git checkout ${{ github.event.inputs.releaseBranch || 'release/v.1.0' }}
           git merge --no-ff develop
           git push
