@@ -1,0 +1,25 @@
+name: Image promotion
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Tag version:'
+        required: true
+      service:
+        type: choice
+        description: 'Select service to promote:'     
+        required: true
+        options:
+          - svc-1
+          - svc-2
+jobs:
+  image-promotion:
+    runs-on: [ ubuntu-latest ] 
+    steps:
+    - uses: addnab/docker-run-action@v3
+      with:
+        registry: quay.io
+        image: skopeo/stable:v1.9.2
+        run: |
+          echo "Hello world"
+        
