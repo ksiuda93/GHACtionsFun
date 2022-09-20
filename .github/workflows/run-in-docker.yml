@@ -15,11 +15,14 @@ on:
 jobs:
   image-promotion:
     runs-on: [ ubuntu-latest ] 
-    container: quay.io/skopeo/stable:v1.9.2
     steps:
-    - name: Skopeo Promotion
+    - uses: addnab/docker-run-action@v3
+      name: Skopeo Promotion
       env:
-        HARBOR_ROBOT_ACCOUNT: ${{ secrets.HARBOR_ROBOT_ACCOUNT }}
+        HARBOR_ROBOT_ACCOUNT: "test"
+      with:
+        image: quay.io/skopeo/stable:v1.9.2
         run: |
           echo "Hello world"
+          echo ${{ env.HARBOR_ROBOT_ACCOUNT }}
         
